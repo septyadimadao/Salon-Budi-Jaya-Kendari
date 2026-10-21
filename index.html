@@ -1,0 +1,423 @@
+<title>Salon Budi Jaya</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Salon Budi Jaya — salon, rias pengantin, dekorasi pernikahan dan pesta, serta sewa baju adat.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap">
+<style>
+/* Layout: navy malam (dari logo lama) bergantian dengan pita gading; emas hanya untuk garis, monogram & aksen */
+:root{
+  --night:#0A1322; --night-2:#111E33; --line:#26344D;
+  --gold:#D8B46A; --gold-soft:#F1DCA2; --ivory:#F6F1E6; --ivory-2:#ECE4D3;
+  --ink:#1C2436; --muted:#8E99AE; --muted-ink:#5B6375;
+  --display:"Italiana","Didot","Bodoni 72",Georgia,serif;
+  --accent:"Cormorant Garamond","Garamond",Georgia,serif;
+  --body:"Jost","Avenir Next","Segoe UI",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--night);color:var(--ivory);font-family:var(--body);font-weight:300;font-size:16px;line-height:1.7}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--night)}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;letter-spacing:.02em}
+h2{font-size:clamp(2rem,4.6vw,3.2rem);line-height:1.1}
+h3{font-size:1.55rem;line-height:1.2}
+p{margin:0}
+.eyebrow{font-size:.74rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.em{font-family:var(--accent);font-style:italic;color:var(--gold-soft)}
+.btn{display:inline-flex;align-items:center;gap:.6em;padding:.85em 1.5em;font:500 .82rem/1 var(--body);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid var(--gold);transition:background .25s,color .25s;cursor:pointer}
+.btn-gold{background:var(--gold);color:var(--night)}
+.btn-gold:hover{background:var(--gold-soft);border-color:var(--gold-soft)}
+.btn-line{background:transparent;color:var(--gold-soft)}
+.btn-line:hover{background:rgba(216,180,106,.12)}
+:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(10,19,34,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand img{width:54px;height:40px;object-fit:contain}
+.brand b{font-family:var(--display);font-weight:400;font-size:1.3rem;letter-spacing:.18em}
+.brand small{display:block;font-size:.62rem;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;margin-top:-2px}
+nav.links{display:flex;gap:28px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+nav.links a{text-decoration:none;color:var(--muted)}
+nav.links a:hover{color:var(--gold-soft)}
+@media (max-width:860px){nav.links{display:none}}
+@media (max-width:440px){.top .btn span{display:none}.top .btn{padding:.7em}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;padding-block:72px 84px}
+.hero h1{font-size:clamp(2.8rem,7vw,5.4rem);line-height:1}
+.hero h1 .em{display:block;font-size:.62em;margin-top:.25em}
+.hero p.lead{margin-top:24px;max-width:46ch;color:#C9CFDB;font-size:1.06rem}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.hero .svc-line{margin-top:40px;display:flex;flex-wrap:wrap;gap:8px 22px;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.hero .svc-line span::before{content:"✦";color:var(--gold);margin-right:8px;font-size:.7em}
+.hero-mark{justify-self:center;width:min(460px,100%);max-width:100%}
+.hero-mark img{display:block;width:100%;height:auto;filter:drop-shadow(0 0 40px rgba(216,180,106,.18));animation:rise 1.4s ease-out}
+@keyframes rise{from{opacity:.4;transform:scale(.97)}}
+.hero::after{content:"";position:absolute;inset:auto -10% -40% 40%;height:80%;background:radial-gradient(closest-side,rgba(216,180,106,.13),transparent);pointer-events:none}
+@media (max-width:820px){.hero .wrap{grid-template-columns:1fr;padding-block:40px 56px}.hero-mark{order:-1;width:min(340px,88%)}}
+.draw{stroke-dasharray:900;stroke-dashoffset:0;animation:draw 2.4s ease-out}
+@keyframes draw{from{stroke-dashoffset:900}}
+
+/* ivory band */
+.band-ivory{background:var(--ivory);color:var(--ink)}
+.band-ivory .eyebrow{color:#9A7838}
+.band-ivory .em{color:#8A6A2F}
+section{padding-block:88px}
+.sec-head{display:grid;gap:14px;max-width:640px;margin-bottom:48px}
+.sec-head p{color:var(--muted-ink)}
+.band-night .sec-head p{color:var(--muted)}
+
+/* layanan */
+.services{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#D9CCB0;border:1px solid #D9CCB0}
+.svc{background:var(--ivory);padding:36px 32px;display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:start;min-width:0}
+.svc .ico{grid-row:span 3;width:52px;height:52px;border:1px solid #C9B488;border-radius:50%;display:grid;place-items:center;color:#9A7838}
+.svc .ico svg{width:26px;height:26px}
+.svc p{color:var(--muted-ink);font-size:.97rem}
+.svc ul{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-wrap:wrap;gap:6px}
+.svc li{font-size:.74rem;letter-spacing:.06em;padding:.3em .8em;border:1px solid #D9CCB0;color:#5B5140}
+.svc-wide{grid-column:1/-1;background:var(--ink);color:var(--ivory)}
+.svc-wide p{color:#C9CFDB}.svc-wide .ico{border-color:var(--gold);color:var(--gold)}
+.svc-wide li{border-color:var(--line);color:var(--gold-soft)}
+.svc-wide .price{color:var(--gold-soft)}
+.price{margin-top:14px;font-family:var(--accent);font-style:italic;font-size:1.08rem;color:#8A6A2F}
+@media (max-width:760px){.services{grid-template-columns:1fr}.svc{padding:28px 20px}}
+
+/* langkah */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;counter-reset:s}
+.step{border-top:1px solid var(--gold);padding-top:18px}
+.step .n{font-family:var(--display);font-size:2.6rem;color:var(--gold);line-height:1}
+.step h3{font-size:1.25rem;margin:10px 0 6px}
+.step p{color:var(--muted);font-size:.94rem}
+@media (max-width:860px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:460px){.steps{grid-template-columns:1fr}}
+
+/* galeri */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:180px;gap:12px}
+.ph{position:relative;overflow:hidden;background:linear-gradient(150deg,#E9DFCB,#D8C8A6);display:flex;align-items:flex-end;padding:14px;min-width:0}
+.ph::before{content:"";position:absolute;inset:10px;border:1px solid rgba(255,255,255,.55);pointer-events:none}
+.ph img.motif{position:absolute;right:-14px;top:-10px;width:130px;height:auto;opacity:.22;filter:sepia(1) brightness(.6)}
+.ph span{position:relative;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#4E4636;background:rgba(246,241,230,.85);padding:.35em .7em}
+.ph.t1{grid-column:span 2;grid-row:span 2;background:linear-gradient(150deg,#1A2A47,#0A1322)}
+.ph.t1 span{background:rgba(14,26,47,.8);color:var(--gold-soft)}
+.ph.t1 img.motif{filter:none;opacity:.3;width:240px}
+.ph.t2{grid-row:span 2}
+.gal-note{margin-top:18px;font-size:.85rem;color:var(--muted-ink)}
+@media (max-width:760px){.gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}.ph.t2{grid-row:span 1}}
+
+/* pesan */
+.order{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
+.order-copy p{color:var(--muted);margin-top:16px;max-width:42ch}
+.wa-box{margin-top:28px;border:1px solid var(--line);padding:20px;display:grid;gap:4px}
+.wa-box .lbl{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.wa-box .num{font-family:var(--display);font-size:1.6rem;color:var(--gold-soft);letter-spacing:.06em;user-select:all}
+.wa-box .num.blank{color:var(--muted);font-size:1.1rem;font-family:var(--body)}
+form.f{background:var(--night-2);border:1px solid var(--line);padding:32px;display:grid;grid-template-columns:1fr 1fr;gap:18px;min-width:0}
+.f label{display:grid;gap:6px;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);min-width:0}
+.f .full{grid-column:1/-1}
+.f input,.f select,.f textarea{font:400 1rem var(--body);color:var(--ivory);background:var(--night);border:1px solid var(--line);padding:.75em .85em;width:100%;letter-spacing:0;text-transform:none}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--gold);outline:none}
+.f textarea{min-height:90px;resize:vertical}
+.f .btn{justify-content:center}
+.f .hint{font-size:.8rem;color:var(--muted);text-transform:none;letter-spacing:0}
+@media (max-width:860px){.order{grid-template-columns:1fr}form.f{grid-template-columns:1fr;padding:22px}}
+
+/* lokasi */
+.loc{display:grid;grid-template-columns:1.2fr .8fr;gap:0;border:1px solid #D9CCB0}
+.mapart{background:#EDE5D2;min-height:340px;position:relative;min-width:0}
+.mapart svg{position:absolute;inset:0;width:100%;height:100%}
+.loc-info{padding:36px;display:grid;gap:22px;align-content:start;background:var(--ivory)}
+.loc-info dt{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:#9A7838;font-weight:500}
+.loc-info dd{margin:4px 0 0;color:var(--ink)}
+.loc-info dl{margin:0;display:grid;gap:18px}
+.blank{color:#9C9483;font-style:italic}
+.loc .btn-line{color:var(--ink);border-color:#9A7838}
+.loc .btn-line:hover{background:rgba(154,120,56,.1)}
+@media (max-width:760px){.loc{grid-template-columns:1fr}.mapart{min-height:240px}.loc-info{padding:24px 20px}}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding-block:56px 40px}
+footer .wrap{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:40px}
+footer h4{font:500 .72rem var(--body);letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin:0 0 14px}
+footer p,footer li{color:var(--muted);font-size:.92rem}
+footer ul{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.socials{display:flex;gap:10px}
+.socials a{width:42px;height:42px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--gold-soft);transition:border-color .2s,background .2s}
+.socials a:hover{border-color:var(--gold);background:rgba(216,180,106,.1)}
+.socials svg{width:18px;height:18px}
+.copy{grid-column:1/-1;border-top:1px solid var(--line);padding-top:22px;font-size:.78rem;color:var(--muted);letter-spacing:.06em}
+@media (max-width:760px){footer .wrap{grid-template-columns:1fr}}
+
+/* floating WA */
+.fab{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;width:58px;height:58px;border-radius:50%;background:var(--gold);color:var(--night);display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:transform .2s}
+.fab:hover{transform:scale(1.06)}
+.fab svg{width:28px;height:28px}
+</style>
+
+<!-- Logo (monogram) disimpan sekali, dipakai ulang -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#beranda" aria-label="Salon Budi Jaya, ke beranda">
+      <img src="logo-ikon.png" alt="" width="54" height="40">
+      <span><b>BUDI JAYA</b><small>Salon · Wedding · Decoration</small></span>
+    </a>
+    <nav class="links" aria-label="Navigasi utama">
+      <a href="#layanan">Layanan</a><a href="#galeri">Galeri</a><a href="#pesan">Pesan</a><a href="#lokasi">Lokasi</a>
+    </nav>
+    <a class="btn btn-gold wa-link" href="#pesan"><svg><use href="#wa"/></svg><span>WhatsApp</span></a>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="beranda" style="padding:0">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Salon &amp; Wedding Organizer</p>
+      <h1 style="margin-top:18px">Budi Jaya<span class="em">untuk hari paling berkesan dalam hidup Anda</span></h1>
+      <p class="lead">Rias pengantin, dekorasi pelaminan dan pesta, sewa baju adat, hingga perawatan salon harian. Semua ditangani satu tim, dari konsultasi pertama sampai hari H.</p>
+      <div class="ctas">
+        <a class="btn btn-gold" href="#pesan"><svg><use href="#wa"/></svg>Konsultasi Gratis</a>
+        <a class="btn btn-line" href="#layanan">Lihat Layanan</a>
+      </div>
+      <div class="svc-line"><span>Dekorasi</span><span>Make Up</span><span>Baju Adat</span><span>Salon</span></div>
+    </div>
+    <div class="hero-mark"><img src="logo-emas-web.png" alt="Logo Budi Jaya: Salon, Wedding and Decoration" width="640" height="576"></div>
+  </div>
+</section>
+
+<section class="band-ivory" id="layanan">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Layanan Kami</p>
+      <h2>Semua kebutuhan acara, <span class="em">dalam satu tempat</span></h2>
+      <p>Pilih layanan satuan atau gabungkan menjadi satu paket. Harga menyesuaikan konsep dan jumlah tamu, jadi silakan konsultasi dulu.</p>
+    </div>
+    <div class="services">
+      <article class="svc">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 20V11a8 8 0 0 1 16 0v9M2 20h20M8 20v-6m8 6v-6M12 3v2"/></svg></div>
+        <h3>Dekorasi Pernikahan &amp; Pesta</h3>
+        <p>Pelaminan, gerbang masuk, meja tamu dan pencahayaan, dari konsep adat sampai modern.</p>
+        <ul><li>Pelaminan adat</li><li>Dekorasi modern</li><li>Akad &amp; resepsi</li><li>Ulang tahun &amp; syukuran</li></ul>
+      </article>
+      <article class="svc">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M14 3l7 7-9 9H5v-7z"/><path d="M11 6l7 7"/></svg></div>
+        <h3>Rias Pengantin &amp; Make Up</h3>
+        <p>Rias pengantin adat maupun internasional, ditambah make up keluarga, pendamping dan wisuda.</p>
+        <ul><li>Pengantin</li><li>Keluarga &amp; pagar ayu</li><li>Wisuda</li><li>Pesta</li></ul>
+      </article>
+      <article class="svc">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 3l3 2 3-2 5 3-2 4-2-1v12H8V9l-2 1-2-4z"/></svg></div>
+        <h3>Sewa Baju Adat</h3>
+        <p>Busana adat lengkap dengan aksesori untuk pengantin, orang tua, pendamping dan keluarga.</p>
+        <ul><li>Baju pengantin</li><li>Busana orang tua</li><li>Aksesori &amp; perhiasan</li></ul>
+      </article>
+      <article class="svc">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8 16L19 4M16 16L5 4"/></svg></div>
+        <h3>Perawatan Salon</h3>
+        <p>Potong dan tata rambut, creambath, sanggul, serta perawatan wajah untuk sehari-hari.</p>
+        <ul><li>Potong &amp; styling</li><li>Sanggul</li><li>Creambath</li><li>Facial</li></ul>
+      </article>
+      <article class="svc svc-wide">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg></div>
+        <h3>Paket Pernikahan Lengkap</h3>
+        <p>Dekorasi, rias pengantin dan keluarga, serta baju adat dalam satu paket. Lebih hemat dan Anda cukup berkoordinasi dengan satu tim.</p>
+        <ul><li>Dekorasi</li><li>Rias</li><li>Baju adat</li><li>Konsultasi konsep</li></ul>
+        <p class="price">Harga paket: hubungi kami untuk penawaran</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band-night" id="alur">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Cara Memesan</p>
+      <h2>Empat langkah <span class="em">menuju hari H</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Konsultasi</h3><p>Ceritakan tanggal, lokasi, jumlah tamu dan konsep lewat WhatsApp atau datang ke salon.</p></div>
+      <div class="step"><div class="n">2</div><h3>Pilih Paket</h3><p>Kami kirimkan pilihan dekorasi, rias dan busana beserta rincian harganya.</p></div>
+      <div class="step"><div class="n">3</div><h3>Booking</h3><p>Tanggal dikunci setelah pembayaran uang muka. Fitting baju dijadwalkan bersama.</p></div>
+      <div class="step"><div class="n">4</div><h3>Hari H</h3><p>Tim datang lebih awal untuk dekorasi dan rias, sehingga acara berjalan tepat waktu.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band-ivory" id="galeri">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Galeri</p>
+      <h2>Hasil kerja <span class="em">Budi Jaya</span></h2>
+    </div>
+    <div class="gallery">
+      <div class="ph t1"><img class="motif" src="logo-ikon.png" alt=""><span>Foto pelaminan</span></div>
+      <div class="ph t2"><img class="motif" src="logo-ikon.png" alt=""><span>Rias pengantin</span></div>
+      <div class="ph"><img class="motif" src="logo-ikon.png" alt=""><span>Baju adat</span></div>
+      <div class="ph"><img class="motif" src="logo-ikon.png" alt=""><span>Dekorasi pesta</span></div>
+      <div class="ph"><img class="motif" src="logo-ikon.png" alt=""><span>Make up wisuda</span></div>
+      <div class="ph"><img class="motif" src="logo-ikon.png" alt=""><span>Suasana salon</span></div>
+    </div>
+    <p class="gal-note">Bingkai di atas siap diganti dengan foto asli hasil kerja salon.</p>
+  </div>
+</section>
+
+<section class="band-night" id="pesan">
+  <div class="wrap order">
+    <div class="order-copy">
+      <p class="eyebrow">Pesan via WhatsApp</p>
+      <h2 style="margin-top:14px">Tanya jadwal &amp; harga, <span class="em">langsung ke kami</span></h2>
+      <p>Isi formulir singkat ini, lalu tekan tombol kirim. Pesan akan tersusun otomatis di WhatsApp sehingga Anda tinggal mengirimnya.</p>
+      <div class="wa-box">
+        <span class="lbl">Nomor WhatsApp</span>
+        <span class="num" id="waNum"></span>
+      </div>
+    </div>
+    <form class="f" id="orderForm" novalidate>
+      <label for="nama">Nama<input id="nama" name="nama" autocomplete="name" placeholder="Nama lengkap"></label>
+      <label for="tanggal">Tanggal acara<input id="tanggal" name="tanggal" type="date"></label>
+      <label class="full" for="layanan-pilih">Layanan
+        <select id="layanan-pilih" name="layanan">
+          <option>Paket Pernikahan Lengkap</option>
+          <option>Dekorasi Pernikahan &amp; Pesta</option>
+          <option>Rias Pengantin &amp; Make Up</option>
+          <option>Sewa Baju Adat</option>
+          <option>Perawatan Salon</option>
+        </select>
+      </label>
+      <label class="full" for="catatan">Catatan<textarea id="catatan" name="catatan" placeholder="Lokasi acara, perkiraan jumlah tamu, konsep yang diinginkan"></textarea></label>
+      <a class="btn btn-gold full" id="sendWa" href="#" target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Kirim lewat WhatsApp</a>
+      <p class="hint full" id="formHint">Pesan akan dibuka di WhatsApp. Belum ada yang terkirim sampai Anda menekan kirim di sana.</p>
+    </form>
+  </div>
+</section>
+
+<section class="band-ivory" id="lokasi">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Lokasi &amp; Jam Buka</p>
+      <h2>Kunjungi <span class="em">salon kami</span></h2>
+    </div>
+    <div class="loc">
+      <div class="mapart" aria-label="Peta petunjuk ilustratif">
+        <svg viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="600" height="360" fill="#EDE5D2"/>
+          <path d="M0 250 C150 230 260 280 600 210" stroke="#BFD0DD" stroke-width="34" fill="none"/>
+          <g stroke="#FBF8F1" stroke-width="16" fill="none" stroke-linecap="round">
+            <path d="M-10 120 H610"/><path d="M180 -10 V370"/><path d="M420 -10 C400 120 440 200 410 370"/>
+          </g>
+          <g stroke="#FBF8F1" stroke-width="7" fill="none">
+            <path d="M0 50 H180"/><path d="M180 190 H420"/><path d="M300 -10 V120"/><path d="M90 120 V300"/><path d="M420 60 H610"/>
+          </g>
+          <g fill="#DDD2B8"><rect x="200" y="30" width="80" height="70"/><rect x="320" y="20" width="80" height="80"/><rect x="200" y="140" width="80" height="35"/><rect x="440" y="140" width="120" height="50"/><rect x="20" y="70" width="55" height="35"/></g>
+          <g transform="translate(300 155)">
+            <circle r="34" fill="#C9A45C" opacity=".18"/>
+            <path d="M0 -42 C-16 -42 -26 -30 -26 -16 C-26 4 0 22 0 22 C0 22 26 4 26 -16 C26 -30 16 -42 0 -42Z" fill="#0A1322"/>
+            <circle cy="-17" r="9" fill="#C9A45C"/>
+          </g>
+          <text x="300" y="206" text-anchor="middle" font-family="Italiana, Georgia, serif" font-size="18" fill="#0A1322" letter-spacing="2">SALON BUDI JAYA</text>
+        </svg>
+      </div>
+      <div class="loc-info">
+        <dl>
+          <div><dt>Alamat</dt><dd class="blank">[Alamat lengkap salon]</dd></div>
+          <div><dt>Jam Buka</dt><dd class="blank">[Hari &amp; jam operasional]</dd></div>
+          <div><dt>Patokan</dt><dd class="blank">[Dekat dengan … ]</dd></div>
+        </dl>
+        <a class="btn btn-line" id="mapsLink" href="https://www.google.com/maps/search/?api=1&amp;query=Salon+Budi+Jaya" target="_blank" rel="noopener">Buka di Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#beranda"><img src="logo-ikon.png" alt="" width="54" height="40"><span><b>BUDI JAYA</b><small>Salon · Wedding · Decoration</small></span></a>
+      <p style="margin-top:16px;max-width:36ch">Salon, rias pengantin, dekorasi dan sewa baju adat untuk setiap momen istimewa.</p>
+    </div>
+    <div>
+      <h4>Layanan</h4>
+      <ul><li>Dekorasi Pernikahan &amp; Pesta</li><li>Rias Pengantin &amp; Make Up</li><li>Sewa Baju Adat</li><li>Perawatan Salon</li></ul>
+    </div>
+    <div>
+      <h4>Ikuti Kami</h4>
+      <div class="socials">
+        <a href="#" data-social="instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></a>
+        <a href="#" data-social="facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8z"/></svg></a>
+        <a href="#" data-social="tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.4 2.4 2 4 4.5 4.2v3.4c-1.6 0-3.1-.5-4.5-1.4v6.3A6 6 0 1 1 10 9.5v3.5a2.5 2.5 0 1 0 2.5 2.5V3z"/></svg></a>
+        <a href="#pesan" aria-label="WhatsApp" class="wa-link"><svg><use href="#wa"/></svg></a>
+      </div>
+      <p style="margin-top:14px" id="socialNote">Tautan media sosial belum diisi.</p>
+    </div>
+    <p class="copy">© 2026 Salon Budi Jaya. Semua hak dilindungi.</p>
+  </div>
+</footer>
+
+<a class="fab wa-link" href="#pesan" aria-label="Chat WhatsApp"><svg><use href="#wa"/></svg></a>
+
+<script>
+/* ====== ISI DATA SALON DI SINI ====== */
+const DATA = {
+  wa: "",          // contoh: "6281234567890" (pakai 62, tanpa + dan tanpa 0 di depan)
+  instagram: "",   // contoh: "https://instagram.com/namaakun"
+  facebook: "",
+  tiktok: "",
+  maps: ""         // tautan pin Google Maps salon (Bagikan > Salin link)
+};
+/* ==================================== */
+
+const waBase = "https://wa.me/" + (DATA.wa || "");
+const numEl = document.getElementById("waNum");
+if (DATA.wa) { numEl.textContent = "+" + DATA.wa; }
+else { numEl.textContent = "[Nomor WhatsApp belum diisi]"; numEl.classList.add("blank"); }
+
+if (DATA.wa) {
+  document.querySelectorAll(".wa-link").forEach(a => {
+    a.href = waBase + "?text=" + encodeURIComponent("Halo Salon Budi Jaya, saya ingin bertanya tentang layanan Anda.");
+    a.target = "_blank"; a.rel = "noopener";
+  });
+}
+
+let filled = 0;
+document.querySelectorAll("[data-social]").forEach(a => {
+  const url = DATA[a.dataset.social];
+  if (url) { a.href = url; filled++; } else { a.removeAttribute("target"); a.addEventListener("click", e => e.preventDefault()); }
+});
+if (filled) document.getElementById("socialNote").hidden = true;
+if (DATA.maps) document.getElementById("mapsLink").href = DATA.maps;
+
+function buildMessage() {
+  const v = id => document.getElementById(id).value.trim();
+  let tgl = v("tanggal");
+  if (tgl) { try { tgl = new Date(tgl + "T00:00").toLocaleDateString("id-ID", {day:"numeric", month:"long", year:"numeric"}); } catch (e) {} }
+  const lines = [
+    "Halo Salon Budi Jaya,",
+    "",
+    "Nama: " + (v("nama") || "-"),
+    "Layanan: " + v("layanan-pilih"),
+    "Tanggal acara: " + (tgl || "-"),
+  ];
+  if (v("catatan")) lines.push("Catatan: " + v("catatan"));
+  lines.push("", "Mohon info ketersediaan dan harganya. Terima kasih.");
+  return lines.join("\n");
+}
+const send = document.getElementById("sendWa");
+function refresh() { send.href = waBase + "?text=" + encodeURIComponent(buildMessage()); }
+document.getElementById("orderForm").addEventListener("input", refresh);
+document.getElementById("orderForm").addEventListener("submit", e => e.preventDefault());
+refresh();
+</script>
