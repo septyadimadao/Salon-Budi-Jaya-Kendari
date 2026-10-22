@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pesan · Salon Budi Jaya</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Salon Budi Jaya Kendari: salon, rias pengantin, dekorasi pernikahan dan pesta, serta sewa baju adat.">
+<meta name="theme-color" content="#080B11">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Jost:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+</defs></svg>
+<header class="top" id="top">
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="Salon Budi Jaya, ke beranda"><img src="logo-ikon.png" alt="" width="46" height="34"><span><b>BUDI JAYA</b><small>Salon · Wedding · Decoration</small></span></a>
+    <nav class="links" aria-label="Navigasi utama"><a href="index.html">Beranda</a><a href="layanan.html">Layanan</a><a href="galeri.html">Galeri</a><a href="pesan.html" aria-current="page">Pesan</a><a href="lokasi.html">Lokasi</a></nav>
+    <div class="top-actions">
+      <a class="btn btn-gold wa-link" href="pesan.html"><svg><use href="#wa"/></svg><span>WhatsApp</span></a>
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Buka menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
+    </div>
+  </div>
+  <nav class="mnav" id="mnav" aria-label="Menu"><a href="index.html">Beranda <span>01</span></a><a href="layanan.html">Layanan <span>02</span></a><a href="galeri.html">Galeri <span>03</span></a><a href="pesan.html" aria-current="page">Pesan <span>04</span></a><a href="lokasi.html">Lokasi <span>05</span></a></nav>
+</header>
+<main>
+<section class="intro">
+  <div class="wrap">
+    <p class="eyebrow">Pesan</p>
+    <h1>Konsultasi gratis,<br><span class="soft">langsung lewat WhatsApp.</span></h1>
+    <div class="line" aria-hidden="true"></div>
+    <p class="lead">Isi formulir singkat ini. Pesan akan tersusun otomatis di WhatsApp, Anda tinggal menekan kirim.</p>
+  </div>
+</section>
+<section class="divide glow">
+  <div class="wrap order reveal">
+    <div class="card">
+      <p class="eyebrow">Sebelum memesan</p>
+      <h3 style="margin:12px 0 16px">Siapkan info berikut</h3>
+      <ul class="ticks"><li>Tanggal dan jam acara</li><li>Lokasi acara (gedung, rumah, atau tenda)</li><li>Perkiraan jumlah tamu</li><li>Konsep atau adat yang diinginkan</li></ul>
+      <div class="wa-box"><span class="lbl">Nomor WhatsApp</span><span class="num" id="waNum"></span></div>
+    </div>
+    <div class="card">
+      <form class="f" id="orderForm" novalidate>
+        <label for="nama">Nama<input id="nama" name="nama" autocomplete="name" placeholder="Nama lengkap"></label>
+        <label for="tanggal">Tanggal acara<input id="tanggal" name="tanggal" type="date"></label>
+        <label class="full" for="layanan-pilih">Layanan<select id="layanan-pilih" name="layanan"><option value="Paket Pernikahan Lengkap" data-k="paket">Paket Pernikahan Lengkap</option><option value="Dekorasi Pernikahan &amp; Pesta" data-k="dekorasi">Dekorasi Pernikahan &amp; Pesta</option><option value="Rias Pengantin &amp; Make Up" data-k="rias">Rias Pengantin &amp; Make Up</option><option value="Sewa Baju Adat" data-k="bajuadat">Sewa Baju Adat</option><option value="Perawatan Salon" data-k="salon">Perawatan Salon</option></select></label>
+        <label class="full" for="catatan">Catatan<textarea id="catatan" name="catatan" placeholder="Lokasi acara, perkiraan jumlah tamu, konsep yang diinginkan"></textarea></label>
+        <a class="btn btn-gold full" id="sendWa" href="#" target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Kirim lewat WhatsApp</a>
+        <p class="hint full">Pesan dibuka di WhatsApp. Belum ada yang terkirim sampai Anda menekan kirim di sana.</p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="wrap">
+    <img class="flogo" src="logo-ikon.png" alt="">
+    <p class="fname">BUDI JAYA</p>
+    <p class="ftag">Salon, Wedding &amp; Decoration · Kendari</p>
+    <a class="btn btn-gold wa-link" href="pesan.html"><svg><use href="#wa"/></svg>Hubungi via WhatsApp</a>
+    <nav class="fnav" aria-label="Menu bawah"><a href="index.html">Beranda</a><a href="layanan.html">Layanan</a><a href="galeri.html">Galeri</a><a href="pesan.html">Pesan</a><a href="lokasi.html">Lokasi</a></nav>
+    <div class="socials">
+      <a href="#" data-social="instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></a>
+      <a href="#" data-social="facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8z"/></svg></a>
+      <a href="#" data-social="tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.4 2.4 2 4 4.5 4.2v3.4c-1.6 0-3.1-.5-4.5-1.4v6.3A6 6 0 1 1 10 9.5v3.5a2.5 2.5 0 1 0 2.5 2.5V3z"/></svg></a>
+    </div>
+    <p class="meta">Anggilowu, Kendari · Samping Korem 143 Haluoleo · Setiap hari 08.00&ndash;18.00 WITA</p>
+    <p class="meta" id="socialNote">Tautan media sosial belum diisi.</p>
+    <p class="copy">© 2026 Salon Budi Jaya</p>
+  </div>
+</footer>
+<a class="fab wa-link" href="pesan.html" aria-label="Chat WhatsApp"><svg><use href="#wa"/></svg></a>
+<script src="app.js"></script>
+</body>
+</html>
