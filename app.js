@@ -71,6 +71,8 @@ $$("[data-social]").forEach(a => {
 if (filled && $("#socialNote")) $("#socialNote").hidden = true;
 
 const hasCoord = isFinite(parseFloat(DATA.lat)) && isFinite(parseFloat(DATA.lng));
+if (hasCoord && $("#svLink")) $("#svLink").href = "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=" + DATA.lat + "," + DATA.lng;
+if (hasCoord && $("#earthLink")) $("#earthLink").href = "https://earth.google.com/web/@" + DATA.lat + "," + DATA.lng + ",40a,300d,35y,0h,60t,0r";
 if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
   ? "https://www.google.com/maps/search/?api=1&query=" + DATA.lat + "," + DATA.lng
   : "https://www.google.com/maps/search/?api=1&query=Salon+Budi+Jaya+Kendari");
@@ -120,10 +122,32 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
   sc.onload = function(){
     box.innerHTML = "";
     const map = L.map(box, {scrollWheelZoom:false}).setView([lat, lng], DATA.zoom || 17);
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    const peta = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    });
+    const esri = "https://server.arcgisonline.com/ArcGIS/rest/services/";
+    const satelit = L.layerGroup([
+      L.tileLayer(esri + "World_Imagery/MapServer/tile/{z}/{y}/{x}", {maxZoom: 20, maxNativeZoom: 19,
+        attribution: 'Citra &copy; Esri, Maxar, Earthstar Geographics'}),
+      L.tileLayer(esri + "Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}", {maxZoom: 20, maxNativeZoom: 19, opacity: .8}),
+      L.tileLayer(esri + "Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", {maxZoom: 20, maxNativeZoom: 19})
+    ]);
+    satelit.addTo(map);
+    box.classList.add("is-sat");
+    /* tombol ganti tampilan peta / satelit */
+    const sw = document.createElement("div");
+    sw.className = "map-switch";
+    sw.innerHTML = '<button type="button" data-l="sat" aria-pressed="true">Satelit</button><button type="button" data-l="peta" aria-pressed="false">Peta</button>';
+    L.DomEvent.disableClickPropagation(sw);
+    box.appendChild(sw);
+    sw.addEventListener("click", e => {
+      const b = e.target.closest("button"); if (!b) return;
+      const sat = b.dataset.l === "sat";
+      if (sat) { map.removeLayer(peta); satelit.addTo(map); } else { map.removeLayer(satelit); peta.addTo(map); }
+      box.classList.toggle("is-sat", sat);
+      sw.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    });
     const pin = L.divIcon({
       className: "", iconSize: [40, 52], iconAnchor: [20, 50], popupAnchor: [0, -46],
       html: '<svg class="pin" viewBox="0 0 40 52" aria-hidden="true"><path d="M20 1C9.5 1 2 8.6 2 18.5 2 32 20 51 20 51s18-19 18-32.5C38 8.6 30.5 1 20 1Z" fill="#080B11" stroke="#D8B46A" stroke-width="2"/><circle cx="20" cy="18.5" r="7.5" fill="#D8B46A"/></svg>'

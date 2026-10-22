@@ -254,6 +254,11 @@ form.f{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .mapcard .leaflet-popup-tip{background:var(--bg)}
 .mapcard .leaflet-popup-content{margin:12px 16px;line-height:1.5;font-size:.9rem}
 .mapcard .leaflet-popup-content b{font-family:var(--display);font-weight:500;letter-spacing:.08em;color:var(--gold-soft)}
+.map-switch{position:absolute;top:12px;right:12px;z-index:1000;display:flex;padding:4px;gap:4px;border-radius:999px;background:rgba(8,11,17,.85);border:1px solid var(--line);backdrop-filter:blur(6px)}
+.map-switch button{font:500 .74rem var(--body);letter-spacing:.12em;text-transform:uppercase;padding:.6em 1.1em;border-radius:999px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.map-switch button[aria-pressed="true"]{background:var(--gold);color:#16120A}
+.mapcard.is-sat .leaflet-tile-pane{filter:none}
+.map-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;margin-top:16px}
 .pin{width:40px;height:52px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.35))}
 @media (max-width:640px){.mapcard{min-height:320px}}
 .info dt{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:500}
