@@ -87,6 +87,8 @@ section{padding-block:88px}
 .svc-wide p{color:#C9CFDB}.svc-wide .ico{border-color:var(--gold);color:var(--gold)}
 .svc-wide li{border-color:var(--line);color:var(--gold-soft)}
 .svc-wide .price{color:var(--gold-soft)}
+.svc .price{grid-column:2}
+.svc-wide .ico{grid-row:span 4}
 .price{margin-top:14px;font-family:var(--accent);font-style:italic;font-size:1.08rem;color:#8A6A2F}
 @media (max-width:760px){.services{grid-template-columns:1fr}.svc{padding:28px 20px}}
 
@@ -346,8 +348,8 @@ footer ul{list-style:none;padding:0;margin:0;display:grid;gap:6px}
       <div class="loc-info">
         <dl>
           <div><dt>Alamat</dt><dd>[Nama jalan &amp; nomor], <span>Anggilowu, Kendari, Sulawesi Tenggara 93111</span></dd></div>
-          <div><dt>Jam Buka</dt><dd class="blank">[Hari &amp; jam operasional]</dd></div>
-          <div><dt>Patokan</dt><dd class="blank">[Dekat dengan … ]</dd></div>
+          <div><dt>Jam Buka</dt><dd>Buka setiap hari, pukul 08.00 &ndash; 18.00 WITA</dd></div>
+          <div><dt>Patokan</dt><dd>Samping Korem 143 Haluoleo</dd></div>
         </dl>
         <a class="btn btn-line" id="mapsLink" href="https://www.google.com/maps/search/?api=1&amp;query=Salon+Budi+Jaya" target="_blank" rel="noopener">Buka di Google Maps</a>
       </div>
@@ -414,7 +416,9 @@ document.querySelectorAll("[data-social]").forEach(a => {
   if (url) { a.href = url; filled++; } else { a.removeAttribute("target"); a.addEventListener("click", e => e.preventDefault()); }
 });
 if (filled) document.getElementById("socialNote").hidden = true;
-if (DATA.maps) document.getElementById("mapsLink").href = DATA.maps;
+document.getElementById("mapsLink").href = DATA.maps || (isFinite(parseFloat(DATA.lat)) && isFinite(parseFloat(DATA.lng))
+  ? "https://www.google.com/maps/search/?api=1&query=" + DATA.lat + "," + DATA.lng
+  : "https://www.google.com/maps/search/?api=1&query=Salon+Budi+Jaya+Kendari");
 
 /* ====== PETA OPEN SOURCE (Leaflet + OpenStreetMap) ====== */
 (function(){
@@ -445,11 +449,6 @@ if (DATA.maps) document.getElementById("mapsLink").href = DATA.maps;
     map.on("mouseout", function(){ map.scrollWheelZoom.disable(); });
   };
   document.body.appendChild(sc);
-  const ml = document.getElementById("mapsLink");
-  if (!DATA.maps) {
-    ml.href = "https://www.openstreetmap.org/?mlat=" + lat + "&mlon=" + lng + "#map=" + (DATA.zoom || 17) + "/" + lat + "/" + lng;
-    ml.textContent = "Buka di OpenStreetMap";
-  }
 })();
 
 function buildMessage() {
