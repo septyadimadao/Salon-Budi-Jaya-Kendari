@@ -13,6 +13,19 @@ const DATA = {
 };
 /* ========================================================= */
 
+/* selalu mulai dari paling atas saat membuka halaman */
+(function(){
+  try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}
+  function toTop(){
+    const id = decodeURIComponent((location.hash || "").slice(1));
+    if (id && document.getElementById(id)) return;
+    window.scrollTo({top: 0, left: 0, behavior: "instant"});
+  }
+  toTop();
+  window.addEventListener("pageshow", toTop);
+  window.addEventListener("load", toTop);
+})();
+
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 const waBase = "https://wa.me/" + (DATA.wa || "");
@@ -76,7 +89,7 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
     p.style.strokeDasharray = len + " " + (len + 2);
     p.style.strokeDashoffset = len;
     p.animate([{strokeDashoffset: len}, {strokeDashoffset: 0}], {
-      duration: Math.min(2000, 900 + len * 1.2), delay: 100 + (cy / 649) * 900,
+      duration: Math.min(2000, 900 + len * 1.2), delay: 100 + (cy / 668) * 900,
       easing: "cubic-bezier(.45,0,.25,1)", fill: "both"
     });
   });
