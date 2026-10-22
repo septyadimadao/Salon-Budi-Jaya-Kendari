@@ -72,7 +72,6 @@ if (filled && $("#socialNote")) $("#socialNote").hidden = true;
 
 const hasCoord = isFinite(parseFloat(DATA.lat)) && isFinite(parseFloat(DATA.lng));
 if (hasCoord && $("#svLink")) $("#svLink").href = "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=" + DATA.lat + "," + DATA.lng;
-if (hasCoord && $("#earthLink")) $("#earthLink").href = "https://earth.google.com/web/@" + DATA.lat + "," + DATA.lng + ",40a,300d,35y,0h,60t,0r";
 if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
   ? "https://www.google.com/maps/search/?api=1&query=" + DATA.lat + "," + DATA.lng
   : "https://www.google.com/maps/search/?api=1&query=Salon+Budi+Jaya+Kendari");
