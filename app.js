@@ -2,8 +2,8 @@
    ISI DATA SALON DI SINI (berlaku untuk semua halaman)
    ========================================================= */
 const DATA = {
-  wa: "",          // contoh: "6281234567890" (pakai 62, tanpa + dan tanpa 0 di depan)
-  instagram: "",   // contoh: "https://instagram.com/namaakun"
+  wa: "6282255871937", // 0822-5587-1937; contoh: "6281234567890" (pakai 62, tanpa + dan tanpa 0 di depan)
+  instagram: "https://www.instagram.com/budi_jaya.gallery/", // contoh: "https://instagram.com/namaakun"
   facebook: "",
   tiktok: "",
   maps: "",        // tautan pin Google Maps (boleh kosong, otomatis pakai koordinat)
@@ -35,13 +35,14 @@ if (DATA.wa) {
 }
 const numEl = $("#waNum");
 if (numEl) {
-  if (DATA.wa) numEl.textContent = "+" + DATA.wa;
+  if (DATA.wa) numEl.textContent = ("0" + DATA.wa.replace(/^62/, "")).replace(/^(\d{4})(\d{4})(\d+)$/, "$1-$2-$3");
   else { numEl.textContent = "[Nomor WhatsApp belum diisi]"; numEl.classList.add("blank"); }
 }
 let filled = 0;
 $$("[data-social]").forEach(a => {
   const url = DATA[a.dataset.social];
   if (url) { a.href = url; filled++; }
+  else if (DATA.instagram || DATA.facebook || DATA.tiktok) { a.hidden = true; }   /* sembunyikan ikon yang belum punya tautan */
   else { a.removeAttribute("target"); a.addEventListener("click", e => e.preventDefault()); }
 });
 if (filled && $("#socialNote")) $("#socialNote").hidden = true;
