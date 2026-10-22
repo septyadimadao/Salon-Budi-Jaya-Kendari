@@ -135,7 +135,16 @@ form.f{background:var(--night-2);border:1px solid var(--line);padding:32px;displ
 
 /* lokasi */
 .loc{display:grid;grid-template-columns:1.2fr .8fr;gap:0;border:1px solid #D9CCB0}
-.mapart{background:#EDE5D2;min-height:340px;position:relative;min-width:0}
+.mapart{background:#EDE5D2;min-height:340px;position:relative;z-index:0;min-width:0;isolation:isolate}
+.mapart .leaflet-container{position:absolute;inset:0;width:100%;height:100%;font-family:var(--body);background:#EDE5D2}
+.mapart .leaflet-tile-pane{filter:sepia(.18) saturate(.85) contrast(.96)}
+.mapart .leaflet-popup-content-wrapper{border-radius:2px;background:var(--night);color:var(--ivory)}
+.mapart .leaflet-popup-tip{background:var(--night)}
+.mapart .leaflet-popup-content{margin:12px 16px;line-height:1.5;font-size:.9rem}
+.mapart .leaflet-popup-content b{font-family:var(--display);font-weight:400;font-size:1.1rem;letter-spacing:.06em;color:var(--gold-soft)}
+.mapart .leaflet-control-attribution{font-size:.68rem;background:rgba(246,241,230,.85)}
+.mapart .leaflet-control-attribution a{color:#5B5140}
+.pin{width:40px;height:52px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.35))}
 .mapart svg{position:absolute;inset:0;width:100%;height:100%}
 .loc-info{padding:36px;display:grid;gap:22px;align-content:start;background:var(--ivory)}
 .loc-info dt{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:#9A7838;font-weight:500}
@@ -315,7 +324,7 @@ footer ul{list-style:none;padding:0;margin:0;display:grid;gap:6px}
       <h2>Kunjungi <span class="em">salon kami</span></h2>
     </div>
     <div class="loc">
-      <div class="mapart" aria-label="Peta petunjuk ilustratif">
+      <div class="mapart" id="mapbox" aria-label="Peta lokasi salon">
         <svg viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice">
           <rect width="600" height="360" fill="#EDE5D2"/>
           <path d="M0 250 C150 230 260 280 600 210" stroke="#BFD0DD" stroke-width="34" fill="none"/>
@@ -336,7 +345,7 @@ footer ul{list-style:none;padding:0;margin:0;display:grid;gap:6px}
       </div>
       <div class="loc-info">
         <dl>
-          <div><dt>Alamat</dt><dd class="blank">[Alamat lengkap salon]</dd></div>
+          <div><dt>Alamat</dt><dd>[Nama jalan &amp; nomor], <span>Anggilowu, Kendari, Sulawesi Tenggara 93111</span></dd></div>
           <div><dt>Jam Buka</dt><dd class="blank">[Hari &amp; jam operasional]</dd></div>
           <div><dt>Patokan</dt><dd class="blank">[Dekat dengan … ]</dd></div>
         </dl>
@@ -380,7 +389,10 @@ const DATA = {
   instagram: "",   // contoh: "https://instagram.com/namaakun"
   facebook: "",
   tiktok: "",
-  maps: ""         // tautan pin Google Maps salon (Bagikan > Salin link)
+  maps: "",        // tautan pin Google Maps salon (Bagikan > Salin link)
+  lat: "-3.965472",         // garis lintang lokasi salon, contoh: -3.9985 (lihat cara mengambil koordinat)
+  lng: "122.519148",         // garis bujur lokasi salon, contoh: 122.5129
+  zoom: 17         // 15 = lingkungan, 17 = jalan, 18 = bangunan
 };
 /* ==================================== */
 
@@ -403,6 +415,42 @@ document.querySelectorAll("[data-social]").forEach(a => {
 });
 if (filled) document.getElementById("socialNote").hidden = true;
 if (DATA.maps) document.getElementById("mapsLink").href = DATA.maps;
+
+/* ====== PETA OPEN SOURCE (Leaflet + OpenStreetMap) ====== */
+(function(){
+  const lat = parseFloat(DATA.lat), lng = parseFloat(DATA.lng);
+  if (!isFinite(lat) || !isFinite(lng)) return;               // koordinat kosong: tetap pakai peta ilustrasi
+  const base = "https://unpkg.com/leaflet@1.9.4/dist/";
+  const css = document.createElement("link");
+  css.rel = "stylesheet"; css.href = base + "leaflet.css";
+  document.head.appendChild(css);
+  const sc = document.createElement("script");
+  sc.src = base + "leaflet.js";
+  sc.onload = function(){
+    const box = document.getElementById("mapbox");
+    box.innerHTML = "";
+    const map = L.map(box, {scrollWheelZoom:false, zoomControl:true}).setView([lat, lng], DATA.zoom || 17);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    const pin = L.divIcon({
+      className: "",
+      iconSize: [40, 52], iconAnchor: [20, 50], popupAnchor: [0, -46],
+      html: '<svg class="pin" viewBox="0 0 40 52" aria-hidden="true"><path d="M20 1C9.5 1 2 8.6 2 18.5 2 32 20 51 20 51s18-19 18-32.5C38 8.6 30.5 1 20 1Z" fill="#0A1322" stroke="#D8B46A" stroke-width="2"/><circle cx="20" cy="18.5" r="7.5" fill="#D8B46A"/></svg>'
+    });
+    L.marker([lat, lng], {icon: pin, title: "Salon Budi Jaya"}).addTo(map)
+      .bindPopup("<b>Salon Budi Jaya</b><br>Salon, Wedding and Decoration").openPopup();
+    map.on("click", function(){ map.scrollWheelZoom.enable(); });
+    map.on("mouseout", function(){ map.scrollWheelZoom.disable(); });
+  };
+  document.body.appendChild(sc);
+  const ml = document.getElementById("mapsLink");
+  if (!DATA.maps) {
+    ml.href = "https://www.openstreetmap.org/?mlat=" + lat + "&mlon=" + lng + "#map=" + (DATA.zoom || 17) + "/" + lat + "/" + lng;
+    ml.textContent = "Buka di OpenStreetMap";
+  }
+})();
 
 function buildMessage() {
   const v = id => document.getElementById(id).value.trim();
