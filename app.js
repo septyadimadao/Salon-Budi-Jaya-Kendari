@@ -13,6 +13,16 @@ const DATA = {
 };
 /* ========================================================= */
 
+/* =========================================================
+   ULASAN PELANGGAN (hanya ulasan asli, dengan izin pelanggan)
+   Salin satu baris contoh di bawah, hapus tanda // di depannya,
+   lalu ganti isinya. Kontak boleh dikosongkan.
+   ========================================================= */
+const REVIEWS = [
+  // { nama: "Nama Pelanggan", kontak: "nama@gmail.com", bintang: 5, layanan: "Rias Pengantin & Make Up", ulasan: "Isi ulasan dari pelanggan.", tanggal: "2026-10-22" },
+];
+/* ========================================================= */
+
 /* selalu mulai dari paling atas saat membuka halaman */
 (function(){
   try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}
@@ -151,6 +161,67 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
   form.addEventListener("input", refresh);
   form.addEventListener("submit", e => e.preventDefault());
   refresh();
+})();
+
+/* ulasan */
+(function(){
+  const STAR = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/></svg>';
+  const COLORS = ["#E0A526","#9B4DE0","#E5532D","#2E9E6A","#2F7FD8","#C2417A","#7A8B2B","#D9772B"];
+  const esc = t => String(t == null ? "" : t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const stars = n => '<span class="stars" aria-label="' + n + ' dari 5 bintang">' + [1,2,3,4,5].map(i => i <= Math.round(n) ? STAR : '<span class="off">' + STAR + '</span>').join("") + "</span>";
+  const mask = k => { k = String(k || ""); const m = k.match(/^([^@]{1,6})[^@]*(@.+)$/); return m ? m[1] + "···" + m[2] : k; };
+  const color = n => { let h = 0; for (const ch of String(n)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return COLORS[h % COLORS.length]; };
+  const date = d => { try { return d ? new Date(d + "T00:00").toLocaleDateString("id-ID", {day:"numeric", month:"long", year:"numeric"}) : ""; } catch (e) { return ""; } };
+  const list = REVIEWS.filter(r => r && r.nama && r.bintang).sort((a, b) => String(b.tanggal || "").localeCompare(String(a.tanggal || "")));
+
+  function card(r) {
+    const sub = [mask(r.kontak), date(r.tanggal)].filter(Boolean).join(" · ");
+    return '<article class="card rv-card"><div class="rv-top"><div class="rv-av" style="background:' + color(r.nama) + '">' + esc(String(r.nama).trim().charAt(0).toUpperCase()) +
+      '</div><div class="rv-who"><b>' + esc(r.nama) + '</b>' + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</div>' + stars(r.bintang) + '</div>' +
+      (r.layanan ? '<p class="rv-tag">' + esc(r.layanan) + '</p>' : '') +
+      '<p class="rv-q">“' + esc(r.ulasan) + '”</p></article>';
+  }
+  const empty = '<div class="card rv-empty"><img class="lg" src="logo-badge.png" alt=""><h3>Belum ada ulasan</h3><p>Ulasan pelanggan akan tampil di sini. Pernah memakai layanan kami? Jadilah yang pertama memberi penilaian.</p><a class="btn btn-gold" href="ulasan.html#beri">Beri Ulasan</a></div>';
+
+  const sum = $("#rvSummary");
+  if (sum) {
+    const n = list.length;
+    const avg = n ? list.reduce((s, r) => s + Number(r.bintang), 0) / n : 0;
+    const perfect = list.filter(r => Number(r.bintang) === 5).length;
+    const bars = [5,4,3,2,1].map(k => { const c = list.filter(r => Math.round(r.bintang) === k).length; const w = n ? Math.round(c / n * 100) : 0;
+      return '<div class="bar"><span>' + k + '★</span><i><b style="width:' + w + '%"></b></i><span>' + c + '</span></div>'; }).join("");
+    sum.innerHTML = '<div class="rv-sum"><div class="rv-big"><span class="rv-avg">' + (n ? avg.toFixed(1).replace(".", ",") : "–") + '</span><div class="rv-meta">' + stars(avg) +
+      '<span class="txt">' + (n ? 'dari <b>' + n + ' ulasan</b> pelanggan · ' + perfect + ' memberi nilai sempurna' : 'Belum ada ulasan') + '</span></div></div><div class="bars">' + bars + '</div></div>';
+  }
+  const box = $("#reviewList");
+  if (box) box.innerHTML = list.length ? '<div class="rv-list">' + list.map(card).join("") + '</div>' : empty;
+  const home = $("#homeReviews");
+  if (home && list.length) {
+    const lim = +home.dataset.limit || 6;
+    const avg = list.reduce((s, r) => s + Number(r.bintang), 0) / list.length;
+    $("#homeRvSum").innerHTML = '<div class="rv-big"><span class="rv-avg" style="font-size:3rem">' + avg.toFixed(1).replace(".", ",") + '</span><div class="rv-meta">' + stars(avg) + '<span class="txt">dari <b>' + list.length + ' ulasan</b> pelanggan</span></div></div>';
+    home.innerHTML = '<div class="rv-list">' + list.slice(0, lim).map(card).join("") + '</div>';
+    $("#homeRvSec").hidden = false;
+    if (list.length > lim) $("#homeRvMore").hidden = false;
+  }
+
+  const form = $("#reviewForm");
+  if (form) {
+    const send = $("#rvSend");
+    const refresh = () => {
+      const b = (form.querySelector('input[name="bintang"]:checked') || {}).value || "5";
+      const lines = ["Halo Salon Budi Jaya, saya ingin memberi ulasan:", "",
+        "Penilaian: " + "★".repeat(+b) + "☆".repeat(5 - b) + " (" + b + "/5)",
+        "Nama: " + ($("#rvNama").value.trim() || "-"),
+        "Layanan: " + $("#rvLayanan").value,
+        "Ulasan: " + ($("#rvTeks").value.trim() || "-"), "",
+        $("#rvIzin").checked ? "Saya setuju ulasan ini ditampilkan di website." : "Ulasan ini jangan ditampilkan di website."];
+      send.href = waBase + "?text=" + encodeURIComponent(lines.join("\n"));
+    };
+    form.addEventListener("input", refresh); form.addEventListener("change", refresh);
+    form.addEventListener("submit", e => e.preventDefault());
+    refresh();
+  }
 })();
 
 (function(){
