@@ -29,6 +29,14 @@ p{margin:0}
 .muted{color:var(--muted)}
 :focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
 
+/* ikon lucide */
+.lc{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;width:1.25em;height:1.25em;flex:none}
+.dti{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.dti .lc{box-sizing:border-box;width:46px;height:46px;padding:12px;border-radius:12px;color:#16120A;background:linear-gradient(135deg,#F1DCA2 0%,#D8B46A 55%,#B8923F 100%);box-shadow:0 6px 18px rgba(216,180,106,.22),inset 0 1px 0 rgba(255,255,255,.45);stroke-width:1.8;aspect-ratio:1}
+.feature .tag{display:inline-flex;align-items:center;gap:6px}
+.feature .tag .lc{width:13px;height:13px;stroke-width:2}
+.card .ico .lc{stroke-width:1.8}
+
 /* tombol */
 .btn{display:inline-flex;align-items:center;gap:.6em;padding:.85em 1.5em;border-radius:999px;font:500 .8rem/1 var(--body);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border:1px solid var(--gold);transition:background .25s,color .25s,transform .25s;cursor:pointer}
 .btn svg{width:17px;height:17px;flex:none}
@@ -130,7 +138,7 @@ section{padding-block:96px}
 .card{position:relative;background:radial-gradient(120% 90% at 0% 0%,rgba(216,180,106,.07),transparent 55%),var(--card);border:1px solid var(--line);border-radius:14px;padding:30px;min-width:0;transition:border-color .3s,transform .3s}
 a.card{text-decoration:none;display:grid;gap:12px;align-content:start}
 a.card:hover{border-color:rgba(216,180,106,.4);transform:translateY(-2px)}
-.card .ico{width:42px;height:42px;color:var(--gold);display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:rgba(216,180,106,.06)}
+.card .ico{flex:none;box-sizing:border-box;width:46px;height:46px;min-width:46px;aspect-ratio:1;color:#16120A;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,#F1DCA2 0%,#D8B46A 55%,#B8923F 100%);box-shadow:0 6px 18px rgba(216,180,106,.22),inset 0 1px 0 rgba(255,255,255,.45)}
 .card .ico svg{width:22px;height:22px}
 .card p{color:var(--muted);font-size:.95rem}
 .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
@@ -141,9 +149,27 @@ a.card:hover{border-color:rgba(216,180,106,.4);transform:translateY(-2px)}
 .ticks{list-style:none;padding:0;margin:4px 0 0;display:grid;gap:8px}
 .ticks li{display:flex;gap:10px;font-size:.93rem;color:#C9CDD5}
 .ticks li::before{content:"";flex:none;width:6px;height:6px;margin-top:.62em;transform:rotate(45deg);background:var(--gold)}
-.svc{display:grid;gap:14px;align-content:start;scroll-margin-top:100px}
-.svc .head{display:flex;gap:14px;align-items:center}
-.svc .link{margin-top:6px}
+.svc{display:flex;flex-direction:column;gap:14px;scroll-margin-top:100px}
+.svc h3{font-size:1.12rem;line-height:1.35}
+.svc .link{margin-top:auto;padding-top:8px}
+/* kartu layanan sejajar: ikon, judul, deskripsi, daftar dan tautan berada di baris yang sama di setiap kartu */
+@supports (grid-template-rows:subgrid){
+  .svc-grid{row-gap:18px}
+  .svc-grid .svc{display:grid;grid-row:span 5;grid-template-rows:subgrid;row-gap:0;align-content:start}
+  .svc-grid .svc .ico{margin-bottom:22px}
+  .svc-grid .svc h3{align-self:start;margin-bottom:12px}
+  .svc-grid .svc > p{margin-bottom:18px}
+  .svc-grid .svc .ticks{align-self:start;margin-top:0}
+  .svc-grid .svc .link{align-self:end;margin-top:22px;padding-top:0}
+}
+@supports not (grid-template-rows:subgrid){.svc h3{min-height:2.7em}}
+/* isi kartu layanan rata tengah */
+.svc-grid .svc{text-align:center;justify-items:center;align-items:center}
+.svc-grid .svc .ico{justify-self:center;align-self:center}
+.svc-grid .svc h3,.svc-grid .svc > p{justify-self:center;max-width:32ch}
+.svc-grid .svc .ticks{justify-self:center;text-align:left}
+.svc-grid .svc .link{justify-self:center}
+@supports not (grid-template-rows:subgrid){.svc-grid .svc .ico,.svc-grid .svc .ticks,.svc-grid .svc .link{align-self:center}}
 
 /* paket unggulan */
 .feature{border-radius:16px;padding:1px;background:linear-gradient(135deg,rgba(241,220,162,.7),rgba(216,180,106,.1) 40%,rgba(216,180,106,.5))}
