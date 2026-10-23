@@ -1,0 +1,22 @@
+{
+  "name": "Salon Budi Jaya",
+  "short_name": "Budi Jaya",
+  "description": "Salon Budi Jaya Kendari: rias pengantin, dekorasi pernikahan dan pesta, sewa baju adat, serta perawatan salon. Buka setiap hari 08.00–18.00 WITA.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080B11",
+  "theme_color": "#080B11",
+  "lang": "id",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

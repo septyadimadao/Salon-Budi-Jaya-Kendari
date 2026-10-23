@@ -14,6 +14,20 @@ const DATA = {
 /* ========================================================= */
 
 /* =========================================================
+   TANGGAL YANG SUDAH PENUH (format "TAHUN-BULAN-TANGGAL")
+   Tanggal yang sudah lewat otomatis tidak ditampilkan.
+   Contoh: const TANGGAL_PENUH = ["2026-11-14", "2026-11-21"];
+   ========================================================= */
+const TANGGAL_PENUH = [];
+
+/* =========================================================
+   VIDEO BERANDA (opsional)
+   Unggah file video, misalnya "video-salon.mp4", ke GitHub,
+   lalu tulis namanya di sini. Kosongkan untuk tetap memakai foto.
+   ========================================================= */
+const VIDEO_BERANDA = "";
+
+/* =========================================================
    ULASAN PELANGGAN (hanya ulasan asli, dengan izin pelanggan)
    Salin satu baris contoh di bawah, hapus tanda // di depannya,
    lalu ganti isinya. Kontak boleh dikosongkan.
@@ -184,6 +198,37 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
   form.addEventListener("input", refresh);
   form.addEventListener("submit", e => e.preventDefault());
   refresh();
+})();
+
+/* tanggal penuh */
+(function(){
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const iso = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  const t0 = iso(today);
+  const list = TANGGAL_PENUH.filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d) && d >= t0).sort();
+  const box = $("#fullDates");
+  if (box && list.length) {
+    box.innerHTML = list.map(d => '<span>' + new Date(d + "T00:00").toLocaleDateString("id-ID", {weekday:"short", day:"numeric", month:"short", year:"numeric"}) + '</span>').join("");
+    $("#fullBox").hidden = false;
+  }
+  const inp = $("#tanggal"), warn = $("#dateWarn");
+  if (inp && warn) {
+    inp.min = t0;
+    inp.addEventListener("input", () => { warn.hidden = !list.includes(inp.value); });
+  }
+})();
+
+/* video beranda */
+(function(){
+  const band = $("#photoBand");
+  if (!band || !VIDEO_BERANDA) return;
+  try { if (matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch (e) {}
+  const img = $("img", band);
+  const v = document.createElement("video");
+  v.src = VIDEO_BERANDA; v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true;
+  v.setAttribute("playsinline", ""); v.poster = img.getAttribute("src"); v.setAttribute("aria-hidden", "true");
+  v.addEventListener("canplay", () => img.replaceWith(v), {once: true});
+  v.load();
 })();
 
 /* ulasan */

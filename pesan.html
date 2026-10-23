@@ -5,7 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Pesan · Salon Budi Jaya</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Salon Budi Jaya Kendari: salon, rias pengantin, dekorasi pernikahan dan pesta, serta sewa baju adat.">
+<meta name="description" content="Pesan dan konsultasi gratis dengan Salon Budi Jaya Kendari lewat WhatsApp 0822-5587-1937.">
+<link rel="canonical" href="https://salon-budi-jaya-kendari.vercel.app/pesan.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Salon Budi Jaya">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Pesan · Salon Budi Jaya">
+<meta property="og:description" content="Pesan dan konsultasi gratis dengan Salon Budi Jaya Kendari lewat WhatsApp 0822-5587-1937.">
+<meta property="og:url" content="https://salon-budi-jaya-kendari.vercel.app/pesan.html">
+<meta property="og:image" content="https://salon-budi-jaya-kendari.vercel.app/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Logo Salon Budi Jaya, Kendari">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#080B11">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,11 +60,13 @@
       <h3 style="margin:12px 0 16px">Siapkan info berikut</h3>
       <ul class="ticks"><li>Tanggal dan jam acara</li><li>Lokasi acara (gedung, rumah, atau tenda)</li><li>Perkiraan jumlah tamu</li><li>Konsep atau adat yang diinginkan</li></ul>
       <div class="wa-box"><span class="lbl">Nomor WhatsApp</span><span class="num" id="waNum"></span></div>
+      <div class="wa-box" id="fullBox" hidden><span class="lbl">Tanggal yang sudah penuh</span><div class="full-dates" id="fullDates"></div></div>
     </div>
     <div class="card">
       <form class="f" id="orderForm" novalidate>
         <label for="nama">Nama<input id="nama" name="nama" autocomplete="name" placeholder="Nama lengkap"></label>
         <label for="tanggal">Tanggal acara<input id="tanggal" name="tanggal" type="date"></label>
+        <p class="warn" id="dateWarn" hidden>Tanggal ini sudah penuh. Silakan pilih tanggal lain, atau tetap tanyakan lewat WhatsApp.</p>
         <label class="full" for="layanan-pilih">Layanan<select id="layanan-pilih" name="layanan"><option value="Paket Pernikahan Lengkap" data-k="paket">Paket Pernikahan Lengkap</option><option value="Dekorasi Pernikahan &amp; Pesta" data-k="dekorasi">Dekorasi Pernikahan &amp; Pesta</option><option value="Rias Pengantin &amp; Make Up" data-k="rias">Rias Pengantin &amp; Make Up</option><option value="Sewa Baju Adat" data-k="bajuadat">Sewa Baju Adat</option><option value="Perawatan Salon" data-k="salon">Perawatan Salon</option></select></label>
         <label class="full" for="catatan">Catatan<textarea id="catatan" name="catatan" placeholder="Lokasi acara, perkiraan jumlah tamu, konsep yang diinginkan"></textarea></label>
         <a class="btn btn-gold full" id="sendWa" href="#" target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Kirim lewat WhatsApp</a>
