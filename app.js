@@ -223,11 +223,10 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
   const band = $("#photoBand");
   if (!band || !VIDEO_BERANDA) return;
   try { if (matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch (e) {}
-  const img = $("img", band);
   const v = document.createElement("video");
   v.src = VIDEO_BERANDA; v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true;
-  v.setAttribute("playsinline", ""); v.poster = img.getAttribute("src"); v.setAttribute("aria-hidden", "true");
-  v.addEventListener("canplay", () => img.replaceWith(v), {once: true});
+  v.setAttribute("playsinline", ""); v.setAttribute("aria-hidden", "true");
+  v.addEventListener("canplay", () => { band.prepend(v); band.hidden = false; }, {once: true});
   v.load();
 })();
 
