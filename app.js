@@ -79,6 +79,7 @@ let filled = 0;
 $$("[data-social]").forEach(a => {
   const url = DATA[a.dataset.social];
   if (url) { a.href = url; filled++; }
+  else if (a.dataset.always) { a.removeAttribute("target"); a.title = "TikTok segera hadir"; a.addEventListener("click", e => e.preventDefault()); }
   else if (DATA.instagram || DATA.facebook || DATA.tiktok) { a.hidden = true; }   /* sembunyikan ikon yang belum punya tautan */
   else { a.removeAttribute("target"); a.addEventListener("click", e => e.preventDefault()); }
 });
