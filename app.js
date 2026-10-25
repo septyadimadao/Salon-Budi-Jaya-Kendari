@@ -20,6 +20,11 @@ const DATA = {
    ========================================================= */
 const TANGGAL_PENUH = [];
 
+/* Tautan CSV Google Sheets "Tanggal Penuh - Salon Budi Jaya"
+   (File > Bagikan > Publikasikan ke web > lembar "Tanggal Penuh" > CSV).
+   Jika diisi, tanggal di sheet itu otomatis tampil di website. */
+const SHEET_TANGGAL_PENUH = "";
+
 /* =========================================================
    VIDEO BERANDA (opsional)
    Unggah file video, misalnya "video-salon.mp4", ke GitHub,
@@ -201,21 +206,43 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
   refresh();
 })();
 
-/* tanggal penuh */
+/* tanggal penuh (dari daftar di atas + Google Sheets) */
 (function(){
+  const box = $("#fullDates"), inp = $("#tanggal"), warn = $("#dateWarn");
+  if (!box && !inp) return;
   const today = new Date(); today.setHours(0, 0, 0, 0);
-  const iso = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  const pad = n => String(n).padStart(2, "0");
+  const iso = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
   const t0 = iso(today);
-  const list = TANGGAL_PENUH.filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d) && d >= t0).sort();
-  const box = $("#fullDates");
-  if (box && list.length) {
-    box.innerHTML = list.map(d => '<span>' + new Date(d + "T00:00").toLocaleDateString("id-ID", {weekday:"short", day:"numeric", month:"short", year:"numeric"}) + '</span>').join("");
-    $("#fullBox").hidden = false;
+  const BULAN = {jan:1,januari:1,january:1,feb:2,februari:2,february:2,mar:3,maret:3,march:3,apr:4,april:4,mei:5,may:5,jun:6,juni:6,june:6,jul:7,juli:7,july:7,agu:8,agt:8,agustus:8,aug:8,august:8,sep:9,sept:9,september:9,okt:10,oktober:10,oct:10,october:10,nov:11,november:11,des:12,desember:12,dec:12,december:12};
+  function parse(v) {
+    v = String(v || "").trim().replace(/^"|"$/g, "");
+    let m;
+    if ((m = v.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))) return m[1] + "-" + pad(m[2]) + "-" + pad(m[3]);
+    if ((m = v.match(/^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})$/))) return m[3] + "-" + pad(m[2]) + "-" + pad(m[1]);
+    if ((m = v.match(/^(?:[a-z]+,?\s+)?(\d{1,2})\s+([a-z]+)\.?\s+(\d{4})$/i)) && BULAN[m[2].toLowerCase()]) return m[3] + "-" + pad(BULAN[m[2].toLowerCase()]) + "-" + pad(m[1]);
+    return "";
   }
-  const inp = $("#tanggal"), warn = $("#dateWarn");
-  if (inp && warn) {
-    inp.min = t0;
-    inp.addEventListener("input", () => { warn.hidden = !list.includes(inp.value); });
+  let list = [];
+  function render() {
+    list = [...new Set(list)].filter(d => d >= t0).sort();
+    if (box) {
+      box.innerHTML = list.map(d => '<span>' + new Date(d + "T00:00").toLocaleDateString("id-ID", {weekday:"short", day:"numeric", month:"short", year:"numeric"}) + '</span>').join("");
+      $("#fullBox").hidden = !list.length;
+    }
+    if (inp && warn) warn.hidden = !list.includes(inp.value);
+  }
+  if (inp && warn) { inp.min = t0; inp.addEventListener("input", render); }
+  list = TANGGAL_PENUH.map(parse).filter(Boolean);
+  render();
+  if (SHEET_TANGGAL_PENUH) {
+    fetch(SHEET_TANGGAL_PENUH + (SHEET_TANGGAL_PENUH.includes("?") ? "&" : "?") + "t=" + Date.now())
+      .then(r => r.ok ? r.text() : "")
+      .then(txt => {
+        txt.split(/\r?\n/).forEach(line => { const m = line.match(/^\s*"([^"]*)"|^([^,]*)/); const d = parse(m ? (m[1] ?? m[2]) : ""); if (d) list.push(d); });
+        render();
+      })
+      .catch(() => {});
   }
 })();
 
