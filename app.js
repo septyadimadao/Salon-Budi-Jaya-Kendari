@@ -5,7 +5,7 @@ const DATA = {
   wa: "6282255871937", // 0822-5587-1937; contoh: "6281234567890" (pakai 62, tanpa + dan tanpa 0 di depan)
   instagram: "https://www.instagram.com/budi_jaya.gallery/", // contoh: "https://instagram.com/namaakun"
   facebook: "",
-  tiktok: "",
+  tiktok: "https://www.tiktok.com/@budijaya.122",
   maps: "",        // tautan pin Google Maps (boleh kosong, otomatis pakai koordinat)
   lat: "-3.965472",
   lng: "122.519148",
@@ -24,13 +24,6 @@ const TANGGAL_PENUH = [];
    (File > Bagikan > Publikasikan ke web > lembar "Tanggal Penuh" > CSV).
    Jika diisi, tanggal di sheet itu otomatis tampil di website. */
 const SHEET_TANGGAL_PENUH = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTX_QEqFFZHGEkBq-F96vHGd3dq6kDWlNdyVsTR2O69wM_ZgqSWmsHazAN7q9Vw6nKQWWjiLuWFPyu/pub?gid=0&single=true&output=csv";
-
-/* =========================================================
-   VIDEO BERANDA (opsional)
-   Unggah file video, misalnya "video-salon.mp4", ke GitHub,
-   lalu tulis namanya di sini. Kosongkan untuk tetap memakai foto.
-   ========================================================= */
-const VIDEO_BERANDA = "";
 
 /* =========================================================
    ULASAN PELANGGAN (hanya ulasan asli, dengan izin pelanggan)
@@ -246,18 +239,6 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
   }
 })();
 
-/* video beranda */
-(function(){
-  const band = $("#photoBand");
-  if (!band || !VIDEO_BERANDA) return;
-  try { if (matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch (e) {}
-  const v = document.createElement("video");
-  v.src = VIDEO_BERANDA; v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true;
-  v.setAttribute("playsinline", ""); v.setAttribute("aria-hidden", "true");
-  v.addEventListener("canplay", () => { band.prepend(v); band.hidden = false; }, {once: true});
-  v.load();
-})();
-
 /* ulasan */
 (function(){
   const STAR = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>';
@@ -322,11 +303,18 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
 (function(){
   const lb = $("#lightbox");
   if (!lb || !lb.showModal) return;
+  const im = $("img", lb), vd = $("video", lb);
   $$("button.g-item").forEach(b => b.addEventListener("click", () => {
-    $("img", lb).src = b.dataset.full; $("img", lb).alt = b.dataset.cap;
+    if (b.dataset.video) {
+      im.hidden = true; vd.hidden = false; vd.src = b.dataset.video; vd.play().catch(() => {});
+    } else {
+      vd.hidden = true; vd.pause(); vd.removeAttribute("src");
+      im.hidden = false; im.src = b.dataset.full; im.alt = b.dataset.cap;
+    }
     $("p", lb).textContent = b.dataset.cap;
     lb.showModal();
   }));
+  lb.addEventListener("close", () => { vd.pause(); });
   $("button", lb).addEventListener("click", () => lb.close());
   lb.addEventListener("click", e => { if (e.target === lb) lb.close(); });
 })();
