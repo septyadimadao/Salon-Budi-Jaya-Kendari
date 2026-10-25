@@ -23,7 +23,7 @@ const TANGGAL_PENUH = [];
 /* Tautan CSV Google Sheets "Tanggal Penuh - Salon Budi Jaya"
    (File > Bagikan > Publikasikan ke web > lembar "Tanggal Penuh" > CSV).
    Jika diisi, tanggal di sheet itu otomatis tampil di website. */
-const SHEET_TANGGAL_PENUH = "";
+const SHEET_TANGGAL_PENUH = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTX_QEqFFZHGEkBq-F96vHGd3dq6kDWlNdyVsTR2O69wM_ZgqSWmsHazAN7q9Vw6nKQWWjiLuWFPyu/pub?gid=0&single=true&output=csv";
 
 /* =========================================================
    VIDEO BERANDA (opsional)
