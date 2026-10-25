@@ -168,9 +168,12 @@ a.card:hover{border-color:rgba(216,180,106,.4);transform:translateY(-2px)}
 /* kartu layanan dengan foto latar */
 .svc.has-bg{overflow:hidden;isolation:isolate}
 .svc.has-bg::before{content:"";position:absolute;inset:0;z-index:-2;background:var(--bg) center/cover no-repeat;transform:scale(1.02);transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
-.svc.has-bg::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,11,17,.55) 0%,rgba(8,11,17,.82) 45%,rgba(8,11,17,.95) 100%)}
+.svc.has-bg::before{filter:saturate(1.15) brightness(1.08)}
+.svc.has-bg::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,11,17,.18) 0%,rgba(8,11,17,.5) 42%,rgba(8,11,17,.78) 100%)}
+.svc.has-bg h3{text-shadow:0 2px 12px rgba(0,0,0,.65)}
+.svc.has-bg > p,.svc.has-bg .ticks li{text-shadow:0 1px 8px rgba(0,0,0,.8)}
 .svc.has-bg:hover::before{transform:scale(1.08)}
-.svc.has-bg > p,.svc.has-bg .ticks li{color:#D6D2C8}
+.svc.has-bg > p,.svc.has-bg .ticks li{color:#ECE8DF}
 /* kartu layanan sejajar: ikon, judul, deskripsi, daftar dan tautan berada di baris yang sama di setiap kartu */
 @supports (grid-template-rows:subgrid){
   .svc-grid{row-gap:18px}
