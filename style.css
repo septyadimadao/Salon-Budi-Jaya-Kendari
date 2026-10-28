@@ -240,6 +240,7 @@ dialog.lb::backdrop{background:rgba(4,6,10,.9);backdrop-filter:blur(4px)}
 .g-item .play{position:absolute;left:50%;top:50%;z-index:1;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;display:grid;place-items:center;color:#16120A;background:linear-gradient(135deg,#F1DCA2,#D8B46A 60%,#B8923F);box-shadow:0 10px 30px rgba(0,0,0,.45);transition:transform .25s}
 .g-item .play svg{width:26px;height:26px;margin-left:3px}
 button.g-vid:hover .play{transform:scale(1.08)}
+@media (min-width:761px){.g-five{grid-template-rows:auto auto}.g-five > :first-child{grid-row:span 2;aspect-ratio:auto}.g-five > :first-child img.photo{object-position:50% 0}}
 .g-more{display:grid;place-items:center;text-decoration:none;background:radial-gradient(90% 70% at 50% 30%,rgba(216,180,106,.18),transparent 70%),var(--card)}
 .g-more::after{display:none}
 .g-more .more-in{display:grid;justify-items:center;gap:10px;text-align:center;padding:20px}
