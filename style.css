@@ -509,6 +509,32 @@ button.g-item:hover .cap::before{width:72px}
   .g-item::before{inset:10px}
 }
 @media (max-width:760px){.g-grid > :first-child{aspect-ratio:1/1}}
+
+/* ===== atmospheric backgrounds ===== */
+.hero{isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-1;overflow:hidden;background:#080B11 url("hero-bg-poster.jpg") center/cover}
+.hero-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.62;transform:scale(1.04)}
+.hero-bg::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(38% 60% at 74% 50%,rgba(8,11,17,.78),transparent 72%),
+             linear-gradient(90deg,rgba(8,11,17,.95) 0%,rgba(8,11,17,.78) 42%,rgba(8,11,17,.5) 100%),
+             linear-gradient(180deg,rgba(8,11,17,.55) 0%,transparent 22%,transparent 72%,#080B11 100%)}
+@media (max-width:860px){.hero-bg::after{background:radial-gradient(60% 40% at 50% 26%,rgba(8,11,17,.75),transparent 72%),linear-gradient(180deg,rgba(8,11,17,.6) 0%,rgba(8,11,17,.72) 55%,#080B11 100%)}}
+
+.banner{position:relative;isolation:isolate;overflow:hidden;padding-block:0;min-height:clamp(300px,40vw,470px);display:grid;place-items:center;text-align:center;border-top:1px solid var(--line-2)}
+.banner::before{content:"";position:absolute;inset:-4%;z-index:-2;background:url("dekorasi-pelaminan.jpg") 50% 32%/cover no-repeat;filter:saturate(.95) brightness(.9);animation:banner-drift 26s ease-in-out infinite alternate}
+.banner::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,#080B11 0%,rgba(8,11,17,.5) 22%,rgba(8,11,17,.42) 50%,rgba(8,11,17,.5) 78%,#080B11 100%),radial-gradient(60% 70% at 50% 50%,rgba(8,11,17,.45),transparent 75%)}
+.banner-in{display:grid;gap:14px;padding:60px 16px}
+.banner-k{font-size:.74rem;letter-spacing:.32em;text-transform:uppercase;font-weight:600;color:var(--gold)}
+.banner h2{font-size:clamp(1.9rem,4.6vw,3.4rem);line-height:1.12;color:#F4EFE4;text-shadow:0 6px 30px rgba(0,0,0,.6)}
+@keyframes banner-drift{from{transform:scale(1) translate3d(0,0,0)}to{transform:scale(1.08) translate3d(-1.5%,-2%,0)}}
+
+.intro.has-photo{position:relative;isolation:isolate;overflow:hidden;padding-block:88px 64px}
+.intro.has-photo::before{content:"";position:absolute;inset:-3%;z-index:-2;background:var(--ibg) var(--ipos,50% 40%)/cover no-repeat;filter:blur(3px) saturate(.9) brightness(.85);transform:scale(1.05)}
+.intro.has-photo::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(90deg,rgba(8,11,17,.94) 0%,rgba(8,11,17,.8) 45%,rgba(8,11,17,.55) 100%),linear-gradient(180deg,rgba(8,11,17,.4) 0%,transparent 30%,transparent 70%,#080B11 100%)}
+.intro.has-photo p.lead{color:#D5D9E0}
+@media (max-width:620px){.intro.has-photo{padding-block:64px 48px}.intro.has-photo::after{background:linear-gradient(180deg,rgba(8,11,17,.7) 0%,rgba(8,11,17,.82) 60%,#080B11 100%)}}
 /* ===== lightbox nav ===== */
 dialog.lb img.in{animation:lb-in .45s cubic-bezier(.2,.7,.2,1)}
 @keyframes lb-in{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
@@ -517,4 +543,4 @@ dialog.lb .lb-prev{left:10px}
 dialog.lb .lb-next{left:auto;right:10px}
 dialog.lb .lb-nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 dialog.lb .lb-count{position:absolute;left:14px;top:16px;font-size:.8rem;color:var(--gold-soft);background:rgba(8,11,17,.7);padding:4px 10px;border-radius:999px}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.r-wait{opacity:1;transform:none}.logo-line,.logo-shine{display:none}.arch-pics img{transform:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.r-wait{opacity:1;transform:none}.logo-line,.logo-shine{display:none}.banner::before{animation:none}.arch-pics img{transform:none}}

@@ -338,6 +338,16 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
   });
 })();
 
+/* hero video: pause for reduced motion or when hidden */
+(function(){
+  const v = document.getElementById("heroVid");
+  if (!v) return;
+  try { if (matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); return; } } catch (e) {}
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause(); })).observe(v);
+  }
+})();
+
 /* Karya kami: rotate one frame at a time, no duplicates on screen */
 (function(){
   const g = $(".gate");
