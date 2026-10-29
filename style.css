@@ -399,7 +399,7 @@ section{padding-block:68px}
 .card:not(.has-bg):hover::after{opacity:1}
 .card:hover{transform:translateY(-4px);box-shadow:0 24px 48px -28px rgba(0,0,0,.9),0 0 36px -14px rgba(216,180,106,.35)}
 .card .ico{animation:ico-float 5.5s ease-in-out infinite;box-shadow:0 8px 22px -10px rgba(216,180,106,.7)}
-.card:nth-child(2) .ico{animation-delay:-1.4s}.card:nth-child(3) .ico{animation-delay:-2.8s}.card:nth-child(4) .ico{animation-delay:-4.2s}
+.card:nth-child(2) .ico{animation-delay:-1.8s}.card:nth-child(3) .ico{animation-delay:-2.8s}.card:nth-child(4) .ico{animation-delay:-4.2s}
 @keyframes edge-run{to{--ang:360deg}}
 @keyframes ico-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 
@@ -434,6 +434,29 @@ section{padding-block:68px}
   .arch-head{margin-bottom:26px}
 }
 
+
+/* ===== gate of arches (Karya kami) ===== */
+.gate{display:grid;grid-template-columns:.78fr .9fr 1.12fr .9fr .78fr;gap:clamp(10px,1.6vw,22px);align-items:end;max-width:1080px;margin:0 auto}
+.gate-item{position:relative;display:block;overflow:hidden;background:#05070B;
+  border-radius:50% 50% 10px 10px / 30% 30% 10px 10px;
+  box-shadow:0 0 0 1px rgba(216,180,106,.55),0 0 0 6px var(--bg),0 0 0 7px rgba(216,180,106,.28),0 34px 60px -30px rgba(0,0,0,.95)}
+.gate-item.g1,.gate-item.g5{aspect-ratio:3/4.6}
+.gate-item.g2,.gate-item.g4{aspect-ratio:3/4.9}
+.gate-item.g3{aspect-ratio:3/4.8;box-shadow:0 0 0 1px rgba(241,220,162,.9),0 0 0 7px var(--bg),0 0 0 8px rgba(216,180,106,.45),0 0 70px -10px rgba(216,180,106,.4),0 40px 70px -30px rgba(0,0,0,.95)}
+.gate-item img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(1.04) brightness(1.02);
+  transition:transform 1.1s cubic-bezier(.2,.7,.2,1),filter .6s}
+.gate-item::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(216,180,106,.1),transparent 30%,transparent 70%,rgba(8,11,17,.35))}
+.gate-item:hover img,.gate-item:focus-visible img{transform:scale(1.06);filter:saturate(1.02) contrast(1.05) brightness(1.06)}
+.gate-foot{display:grid;justify-items:center;gap:12px;text-align:center;margin-top:40px}
+.gate-foot p{color:var(--muted);max-width:46ch}
+.gate-foot .btn{margin-top:6px}
+@media (max-width:760px){
+  .gate{grid-template-columns:repeat(4,1fr);gap:12px}
+  .gate-item.g3{grid-column:1 / -1;grid-row:1;width:72%;justify-self:center;margin-bottom:10px}
+  .gate-item.g1,.gate-item.g2,.gate-item.g4,.gate-item.g5{aspect-ratio:3/4.8}
+  .gate-foot{margin-top:28px}
+}
 /* ===== lightbox nav ===== */
 dialog.lb img.in{animation:lb-in .45s cubic-bezier(.2,.7,.2,1)}
 @keyframes lb-in{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
