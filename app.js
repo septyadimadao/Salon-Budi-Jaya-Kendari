@@ -303,18 +303,61 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
 (function(){
   const lb = $("#lightbox");
   if (!lb || !lb.showModal) return;
-  const im = $("img", lb), vd = $("video", lb);
-  $$("button.g-item").forEach(b => b.addEventListener("click", () => {
+  const im = $("img", lb), vd = $("video", lb), cap = $("p", lb), cnt = $(".lb-count", lb);
+  const items = $$("button.g-item");
+  let cur = 0;
+  function show(i) {
+    cur = (i + items.length) % items.length;
+    const b = items[cur];
     if (b.dataset.video) {
       im.hidden = true; vd.hidden = false; vd.src = b.dataset.video; vd.play().catch(() => {});
     } else {
       vd.hidden = true; vd.pause(); vd.removeAttribute("src");
-      im.hidden = false; im.src = b.dataset.full; im.alt = b.dataset.cap;
+      im.hidden = false; im.classList.remove("in"); im.src = b.dataset.full; im.alt = b.dataset.cap;
+      requestAnimationFrame(() => im.classList.add("in"));
     }
-    $("p", lb).textContent = b.dataset.cap;
-    lb.showModal();
-  }));
+    cap.textContent = b.dataset.cap;
+    cnt.textContent = (cur + 1) + " / " + items.length;
+  }
+  items.forEach((b, i) => b.addEventListener("click", () => { show(i); lb.showModal(); }));
   lb.addEventListener("close", () => { vd.pause(); });
-  $("button", lb).addEventListener("click", () => lb.close());
+  $(".lb-x", lb).addEventListener("click", () => lb.close());
+  $(".lb-prev", lb).addEventListener("click", () => show(cur - 1));
+  $(".lb-next", lb).addEventListener("click", () => show(cur + 1));
   lb.addEventListener("click", e => { if (e.target === lb) lb.close(); });
+  lb.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight") show(cur + 1);
+    if (e.key === "ArrowLeft") show(cur - 1);
+  });
+  let x0 = null;
+  lb.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, {passive: true});
+  lb.addEventListener("touchend", e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1));
+  });
+})();
+
+/* arch photo rotation + living cards */
+(function(){
+  let still = false;
+  try { still = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+  if (!still) {
+    $$(".arch-pics").forEach((box, k) => {
+      const pics = Array.from(box.children);
+      if (pics.length < 2) return;
+      let i = 0;
+      setTimeout(() => setInterval(() => {
+        if (document.hidden) return;
+        pics[i].classList.remove("on");
+        i = (i + 1) % pics.length;
+        pics[i].classList.add("on");
+      }, 5200), 1200 + k * 1700);
+    });
+  }
+  $$(".card").forEach(c => c.addEventListener("pointermove", e => {
+    const r = c.getBoundingClientRect();
+    c.style.setProperty("--mx", (e.clientX - r.left) + "px");
+    c.style.setProperty("--my", (e.clientY - r.top) + "px");
+  }));
 })();
