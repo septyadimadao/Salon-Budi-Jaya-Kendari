@@ -304,8 +304,8 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
   const lb = $("#lightbox");
   if (!lb || !lb.showModal) return;
   const im = $("img", lb), vd = $("video", lb), cap = $("p", lb), cnt = $(".lb-count", lb);
-  const items = $$("button.g-item");
-  let cur = 0;
+  const all = $$("button.g-item");
+  let items = all, cur = 0;
   function show(i) {
     cur = (i + items.length) % items.length;
     const b = items[cur];
@@ -319,7 +319,10 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
     cap.textContent = b.dataset.cap;
     cnt.textContent = (cur + 1) + " / " + items.length;
   }
-  items.forEach((b, i) => b.addEventListener("click", () => { show(i); lb.showModal(); }));
+  all.forEach(b => b.addEventListener("click", () => {
+    items = all.filter(x => !x.closest("[hidden]"));
+    show(items.indexOf(b)); lb.showModal();
+  }));
   lb.addEventListener("close", () => { vd.pause(); });
   $(".lb-x", lb).addEventListener("click", () => lb.close());
   $(".lb-prev", lb).addEventListener("click", () => show(cur - 1));
@@ -336,6 +339,39 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
     const dx = e.changedTouches[0].clientX - x0; x0 = null;
     if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1));
   });
+})();
+
+/* gallery filter */
+(function(){
+  const bar = $(".g-filter");
+  if (!bar) return;
+  const groups = $$(".g-group");
+  bar.addEventListener("click", e => {
+    const b = e.target.closest("button[data-f]");
+    if (!b) return;
+    $$("button", bar).forEach(x => { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    const f = b.dataset.f;
+    groups.forEach(g => {
+      const show = f === "all" || g.id === f;
+      g.hidden = !show;
+      if (show) { g.classList.remove("g-in"); void g.offsetWidth; g.classList.add("g-in"); g.classList.add("in"); }
+    });
+  });
+})();
+
+/* scroll progress bar + back to top */
+(function(){
+  const bar = $(".scroll-prog"), up = $(".to-top");
+  if (up) { up.hidden = false; up.addEventListener("click", () => window.scrollTo({top: 0, behavior: "smooth"})); }
+  let ticking = false;
+  function upd() {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    if (bar) bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, scrollY / max) : 0) + ")";
+    if (up) up.classList.toggle("show", scrollY > 600);
+    ticking = false;
+  }
+  addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, {passive: true});
+  upd();
 })();
 
 /* shared background: drifting gold sparkles */
