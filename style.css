@@ -495,6 +495,20 @@ button.g-item:hover .cap::before{width:72px}
   .g-five > :first-child::before{border-radius:50% 50% 6px 6px / 19% 19% 6px 6px}
 }
 @media (max-width:760px){.g-grid{gap:14px}.g-item .cap{left:14px;right:14px;bottom:13px;gap:5px;font-size:.84rem;line-height:1.25}.g-item .cap::before{width:18px}.g-item::before{inset:7px}.g-grid > :first-child .cap{font-size:1rem;left:20px;bottom:18px}.g-item .play{width:52px;height:52px;margin:-26px 0 0 -26px}}
+
+/* ===== galeri lebih ringkas ===== */
+@media (min-width:761px){
+  .g-grid{grid-template-columns:repeat(4,1fr);gap:18px}
+  .g-grid:not(.g-five){max-width:calc(75% - 4px);grid-template-columns:repeat(3,1fr)}
+  .g-five{grid-template-rows:auto auto}
+  .g-five > :first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:auto;border-radius:50% 50% 12px 12px / 36% 36% 12px 12px}
+  .g-five > :first-child::before{border-radius:50% 50% 6px 6px / 35% 35% 6px 6px}
+  .g-five > :first-child img.photo{position:absolute;inset:0;width:100%;height:100%}
+  .g-item .cap{font-size:.98rem;left:20px;right:20px;bottom:18px}
+  .g-five > :first-child .cap{font-size:1.2rem;left:28px;bottom:26px}
+  .g-item::before{inset:10px}
+}
+@media (max-width:760px){.g-grid > :first-child{aspect-ratio:1/1}}
 /* ===== lightbox nav ===== */
 dialog.lb img.in{animation:lb-in .45s cubic-bezier(.2,.7,.2,1)}
 @keyframes lb-in{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
