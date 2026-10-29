@@ -338,6 +338,42 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
   });
 })();
 
+/* shared background: drifting gold sparkles */
+(function(){
+  const cv = document.querySelector(".sb-sparks");
+  if (!cv || !cv.getContext) return;
+  try { if (matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch (e) {}
+  const ctx = cv.getContext("2d");
+  let w = 0, h = 0, dpr = 1, parts = [];
+  function size() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = cv.clientWidth; h = cv.clientHeight;
+    cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = w < 700 ? 28 : 55;
+    parts = Array.from({length: n}, () => ({
+      x: Math.random() * w, y: Math.random() * h, r: .5 + Math.random() * 1.7,
+      vy: .08 + Math.random() * .22, vx: (Math.random() - .5) * .08, t: Math.random() * 6.28, s: .6 + Math.random() * 1.4
+    }));
+  }
+  size(); addEventListener("resize", size);
+  function tick() {
+    if (!document.hidden) {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of parts) {
+        p.y -= p.vy; p.x += p.vx; p.t += .02 * p.s;
+        if (p.y < -6) { p.y = h + 6; p.x = Math.random() * w; }
+        const a = .25 + .55 * (0.5 + 0.5 * Math.sin(p.t));
+        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
+        g.addColorStop(0, "rgba(255,240,200," + a + ")");
+        g.addColorStop(1, "rgba(216,180,106,0)");
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 4, 0, 6.2832); ctx.fill();
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
 /* hero video: pause for reduced motion or when hidden */
 (function(){
   const v = document.getElementById("heroVid");
