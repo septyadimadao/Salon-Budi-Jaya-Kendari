@@ -457,6 +457,44 @@ section{padding-block:68px}
   .gate-item.g1,.gate-item.g2,.gate-item.g4,.gate-item.g5{aspect-ratio:3/4.8}
   .gate-foot{margin-top:28px}
 }
+
+/* ===== gate rotation ===== */
+.gate-item img{opacity:0;transform:scale(1.08);transition:opacity 1.5s ease,transform 3.5s cubic-bezier(.2,.7,.2,1),filter .6s}
+.gate-item img.on{opacity:1;transform:scale(1)}
+.gate-item:hover img.on,.gate-item:focus-visible img.on{transform:scale(1.06)}
+
+/* ===== galeri: framed prints, sheen, curtain reveal ===== */
+.g-grid{gap:20px}
+.g-item{border:0;border-radius:12px;
+  box-shadow:0 0 0 1px rgba(216,180,106,.45),0 0 0 5px var(--bg),0 0 0 6px rgba(216,180,106,.18),0 30px 50px -30px rgba(0,0,0,.9);
+  transition:box-shadow .5s}
+button.g-item:hover,button.g-item:focus-visible{box-shadow:0 0 0 1px rgba(241,220,162,.95),0 0 0 5px var(--bg),0 0 0 6px rgba(216,180,106,.5),0 0 54px -12px rgba(216,180,106,.5),0 30px 50px -30px rgba(0,0,0,.9)}
+.g-item::before{content:"";position:absolute;inset:12px;z-index:2;border:1px solid rgba(246,230,184,.3);border-radius:6px;pointer-events:none;
+  transition:inset .7s cubic-bezier(.2,.7,.2,1),border-color .7s}
+button.g-item:hover::before,button.g-item:focus-visible::before{inset:17px;border-color:rgba(246,230,184,.8)}
+.g-more::before{display:none}
+.g-item::after{inset:0;height:auto;z-index:1;
+  background:linear-gradient(115deg,transparent 35%,rgba(255,244,214,.24) 50%,transparent 65%) -160% 0/60% 100% no-repeat,
+             linear-gradient(180deg,transparent 48%,rgba(8,11,17,.9));
+  transition:background-position 1.2s cubic-bezier(.2,.7,.2,1)}
+button.g-item:hover::after,button.g-item:focus-visible::after{background-position:260% 0,0 0}
+.g-item img.photo{transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+button.g-item:hover img.photo{transform:scale(1.07)}
+.g-item .cap{left:24px;right:24px;bottom:24px;z-index:3;display:grid;gap:8px;
+  font-family:var(--accent);font-style:italic;font-size:1.14rem;letter-spacing:.01em;text-transform:none;font-weight:500;color:var(--gold-soft);
+  text-shadow:0 2px 10px rgba(0,0,0,.7)}
+.g-item .cap::before{content:"";width:28px;height:1px;background:var(--gold);transition:width .7s cubic-bezier(.2,.7,.2,1)}
+button.g-item:hover .cap::before{width:72px}
+.g-item .play{z-index:3}
+.g-item.cur{clip-path:inset(0 50% 0 50%);transition:clip-path 1.3s cubic-bezier(.75,0,.2,1)}
+.g-item.cur.open{clip-path:inset(0 0 0 0)}
+.g-item.cur img.photo{transform:scale(1.2)}
+.g-item.cur.open img.photo{transform:scale(1);transition:transform 1.6s cubic-bezier(.2,.7,.2,1)}
+@media (min-width:761px){
+  .g-five > :first-child{border-radius:50% 50% 12px 12px / 20% 20% 12px 12px}
+  .g-five > :first-child::before{border-radius:50% 50% 6px 6px / 19% 19% 6px 6px}
+}
+@media (max-width:760px){.g-grid{gap:14px}.g-item .cap{left:14px;right:14px;bottom:13px;gap:5px;font-size:.84rem;line-height:1.25}.g-item .cap::before{width:18px}.g-item::before{inset:7px}.g-grid > :first-child .cap{font-size:1rem;left:20px;bottom:18px}.g-item .play{width:52px;height:52px;margin:-26px 0 0 -26px}}
 /* ===== lightbox nav ===== */
 dialog.lb img.in{animation:lb-in .45s cubic-bezier(.2,.7,.2,1)}
 @keyframes lb-in{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}

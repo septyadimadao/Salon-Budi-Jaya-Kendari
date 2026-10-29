@@ -338,6 +338,43 @@ if ($("#mapsLink")) $("#mapsLink").href = DATA.maps || (hasCoord
   });
 })();
 
+/* Karya kami: rotate one frame at a time, no duplicates on screen */
+(function(){
+  const g = $(".gate");
+  if (!g || !g.dataset.pool) return;
+  try { if (matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch (e) {}
+  const pool = JSON.parse(g.dataset.pool), frames = $$(".gate-item", g);
+  const shown = frames.map(f => $("img.on", f).getAttribute("src"));
+  const queue = pool.filter(x => shown.indexOf(x[0]) < 0);
+  const order = [2, 0, 4, 1, 3];
+  let k = 0;
+  setInterval(() => {
+    if (document.hidden || !queue.length) return;
+    const f = frames[order[k++ % order.length]];
+    const cur = $("img.on", f), nx = $("img:not(.on)", f), nextP = queue.shift();
+    queue.push([cur.getAttribute("src"), cur.style.objectPosition, cur.alt]);
+    nx.onload = () => { nx.classList.add("on"); cur.classList.remove("on"); };
+    nx.style.objectPosition = nextP[1]; nx.alt = nextP[2]; nx.src = nextP[0];
+  }, 2800);
+})();
+
+/* Galeri: curtain-opening reveal */
+(function(){
+  const its = $$(".g-grid .g-item");
+  if (!its.length || !("IntersectionObserver" in window)) return;
+  try { if (matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch (e) {}
+  its.forEach(el => el.classList.add("cur"));
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target, i = Array.prototype.indexOf.call(el.parentNode.children, el);
+    el.style.transitionDelay = (i * 120) + "ms";
+    requestAnimationFrame(() => el.classList.add("open"));
+    setTimeout(() => { el.classList.remove("cur", "open"); el.style.transitionDelay = ""; }, 1500 + i * 120);
+    io.unobserve(el);
+  }), {rootMargin: "0px 0px -6% 0px"});
+  its.forEach(el => io.observe(el));
+})();
+
 /* arch photo rotation + living cards */
 (function(){
   let still = false;
