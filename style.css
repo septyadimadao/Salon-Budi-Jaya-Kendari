@@ -513,7 +513,7 @@ button.g-item:hover .cap::before{width:72px}
 /* ===== atmospheric backgrounds ===== */
 .hero{isolation:isolate}
 .hero-bg{position:absolute;inset:0;z-index:-1;overflow:hidden;background:#080B11}
-.hero-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:48% 50%;transform-origin:50% 50%;opacity:.95;filter:blur(1px) saturate(1.05) brightness(1.08);animation:banner-drift 30s ease-in-out infinite alternate}
+.hero-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;transform-origin:50% 40%;opacity:.95;filter:blur(1px) saturate(1.05) brightness(1.08);animation:banner-drift 30s ease-in-out infinite alternate}
 .hero-bg::after{content:"";position:absolute;inset:0;
   background:radial-gradient(36% 58% at 74% 50%,rgba(8,11,17,.55),transparent 72%),
              linear-gradient(90deg,rgba(8,11,17,.82) 0%,rgba(8,11,17,.5) 42%,rgba(8,11,17,.22) 100%),
