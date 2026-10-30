@@ -476,10 +476,10 @@ button.g-item:hover,button.g-item:focus-visible{box-shadow:0 0 0 1px rgba(241,22
 button.g-item:hover::before,button.g-item:focus-visible::before{inset:17px;border-color:rgba(246,230,184,.8)}
 .g-more::before{display:none}
 .g-item::after{inset:0;height:auto;z-index:1;
-  background:linear-gradient(115deg,transparent 35%,rgba(255,244,214,.24) 50%,transparent 65%) -160% 0/60% 100% no-repeat,
+  background:linear-gradient(115deg,transparent 0%,transparent 38%,rgba(255,244,214,.08) 44%,rgba(255,244,214,.3) 50%,rgba(255,244,214,.08) 56%,transparent 62%,transparent 100%) 100% 0/300% 100% no-repeat,
              linear-gradient(180deg,transparent 48%,rgba(8,11,17,.9));
-  transition:background-position 1.2s cubic-bezier(.2,.7,.2,1)}
-button.g-item:hover::after,button.g-item:focus-visible::after{background-position:260% 0,0 0}
+  transition:background-position 1.4s cubic-bezier(.25,.6,.3,1)}
+button.g-item:hover::after,button.g-item:focus-visible::after{background-position:0% 0,0 0}
 .g-item img.photo{transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
 button.g-item:hover img.photo{transform:scale(1.07)}
 .g-item .cap{left:24px;right:24px;bottom:24px;z-index:3;display:grid;gap:8px;
